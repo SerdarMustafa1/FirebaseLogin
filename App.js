@@ -1,22 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useMemo, useEffect } from 'react';
-import { Appearance, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useMemo, useEffect } from "react";
+import { Appearance, View } from "react-native";
+import Constants from "expo-constants";
+import * as Google from "expo-google-app-auth";
+import firebase from "firebase";
+import Firebase from "./Firebase";
 import {
   NavigationContainer,
   DarkTheme,
   DefaultTheme,
-} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   DefaultTheme as PaperDefaultTheme,
   DarkTheme as PaperDarkTheme,
   Provider as PaperProvider,
   ActivityIndicator,
-} from 'react-native-paper';
+} from "react-native-paper";
 
-import mainContext from './context/mainContext';
-
-import Firebase from './Firebase';
+import mainContext from "./context/mainContext";
 
 //console.log(i18n.locale);
 
@@ -26,23 +28,23 @@ const CombinedDefaultTheme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...DefaultTheme.colors,
-    primary: '#718E57',
+    primary: "#718E57",
   },
 };
 const CombinedDarkTheme = {
   ...PaperDarkTheme,
   ...DarkTheme,
   dark: true,
-  colors: { ...PaperDarkTheme.colors, ...DarkTheme.colors, primary: '#718E57' },
+  colors: { ...PaperDarkTheme.colors, ...DarkTheme.colors, primary: "#718E57" },
 };
 
-import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
-import SignUpScreen from './screens/SignUpScreen';
-import loc from './utils/localization';
-import { disableExpoCliLogging } from 'expo/build/logs/Logs';
+import LoginScreen from "./screens/LoginScreen";
+import HomeScreen from "./screens/HomeScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import loc from "./utils/localization";
+import { disableExpoCliLogging } from "expo/build/logs/Logs";
 const AppStack = createStackNavigator();
-if (Appearance.getColorScheme() === 'dark') {
+if (Appearance.getColorScheme() === "dark") {
   status = true;
 } else {
   status = false;
@@ -66,6 +68,35 @@ const App = ({ navigation }) => {
     return authListener;
   }, []);
 
+  const Glogin = async () => {
+    try {
+      //await GoogleSignIn.askForPlayServicesAsync();
+      const result = await Google.logInAsync({
+        //return an object with result token and user
+        iosClientId: Constants.manifest.extra.IOS_KEY, //From app.json
+        androidClientId: Constants.manifest.extra.ANDROID_KEY, //From app.json
+      });
+      if (result.type === "success") {
+        console.log(result);
+        setIsLoading(true);
+        const credential = firebase.auth.GoogleAuthProvider.credential(
+          //Set the tokens to Firebase
+          result.idToken,
+          result.accessToken
+        );
+        Firebase.auth()
+          .signInWithCredential(credential) //Login to Firebase
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        //CANCEL
+      }
+    } catch ({ message }) {
+      alert("login: Error:" + message);
+    }
+  };
+
   const doLogin = async (email, password) => {
     setIsLoading(true);
     //console.log('login' + JSON.stringify(userProfile));
@@ -74,7 +105,7 @@ const App = ({ navigation }) => {
       .catch((error) => console.log(error));
   };
 
-  const doSignup = async (email, password) => {
+  const doSignup = async (name, email, password) => {
     setIsLoading(true);
     //console.log('login' + JSON.stringify(userProfile));
     Firebase.auth()
@@ -90,8 +121,12 @@ const App = ({ navigation }) => {
       handleLogin: (email, password) => {
         doLogin(email, password);
       },
-      handleSignup: (email, password) => {
-        doSignup(email, password);
+      handleSignup: (name, email, password) => {
+        doSignup(name, email, password);
+      },
+      handleGLogin: () => {
+        //The new login with google handler available to context
+        Glogin();
       },
     }),
     []
@@ -100,7 +135,7 @@ const App = ({ navigation }) => {
   if (isLoading) {
     // Checking if already logged in
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator animating={true} size="large" />
       </View>
     );
@@ -118,7 +153,7 @@ const App = ({ navigation }) => {
 
                 <AppStack.Screen
                   name="Signup"
-                  options={{ title: loc.t('signup') }}
+                  options={{ title: loc.t("signup") }}
                 >
                   {() => <SignUpScreen />}
                 </AppStack.Screen>

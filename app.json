@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Nested Navigation",
-    "slug": "nestednavi",
+    "name": "WC",
+    "slug": "wcapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,35 +13,33 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.popeating.myapp",
+      "bundleIdentifier": "com.finder.wc",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "",
         "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {
-      "package": "com.popeating.myapp",
+      "package": "com.finder.wc",
       "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Basic Firebase Login",
+    "description": "WC app",
     "githubUrl": "https://github.com/popeating/FirebaseLogin",
     "extra": {
-      "IOS_KEY": "",
-      "ANDROID_KEY": "",
-      "API_KEY": "",
-      "AUTH_DOMAIN": "",
+      "IOS_KEY": "1033446278134-iea3efk15de879qiuoe338atmpm2m6ma.apps.googleusercontent.com",
+      "ANDROID_KEY": "1033446278134-1u2qgs62k4a28smprtr1ftk8d1qqk3mn.apps.googleusercontent.com",
+      "API_KEY": "AIzaSyAkko2ShXmP6KKiuEbqngq6Ow2FBzau1mE",
+      "AUTH_DOMAIN": "wcc-app-310413.firebaseapp.com",
       "DATABASE_URL": "",
-      "PROJECT_ID": "",
-      "STORAGE_BUCKET": "",
-      "MESSAGE_SENDER_ID": "",
-      "APP_ID": ""
+      "PROJECT_ID": "wcc-app-310413",
+      "STORAGE_BUCKET": "wcc-app-310413.appspot.com",
+      "MESSAGE_SENDER_ID": "1033446278134",
+      "APP_ID": "1:1033446278134:web:7a36468db30069af3b7dd7"
     }
   }
 }

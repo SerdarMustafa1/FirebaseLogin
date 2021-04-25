@@ -1,19 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-} from 'react-native';
-import Firebase from '../Firebase';
-import { TextInput, Button } from 'react-native-paper';
-import loc from '../utils/localization';
-import mainContext from '../context/mainContext';
+} from "react-native";
+import Firebase from "../Firebase";
+import { TextInput, Button } from "react-native-paper";
+import loc from "../utils/localization";
+import mainContext from "../context/mainContext";
 
 const LoginScreen = ({ navigation }) => {
+  const { handleGLogin } = useContext(mainContext);
   const { handleLogin } = useContext(mainContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -23,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={(email) => setEmail(email)}
             value={email}
             label="Email"
-            keyboardType={'email-address'}
+            keyboardType={"email-address"}
             mode="outlined"
           />
         </View>
@@ -42,14 +43,22 @@ const LoginScreen = ({ navigation }) => {
           mode="contained"
           icon="login"
         >
-          {loc.t('loginButton')}
+          {loc.t("loginButton")}
         </Button>
 
         <Button
-          title={loc.t('noaccount')}
-          onPress={() => navigation.navigate('Signup')}
+          title={loc.t("noaccount")}
+          onPress={() => navigation.navigate("Signup")}
         >
-          {loc.t('noaccount')}
+          {loc.t("noaccount")}
+        </Button>
+        <Button
+          style={{ backgroundColor: "#4285F4", marginTop: 20 }}
+          onPress={() => handleGLogin()}
+          mode="contained"
+          icon="google"
+        >
+          Login with Google
         </Button>
       </View>
     </TouchableWithoutFeedback>
@@ -58,14 +67,14 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    width: '80%',
+    width: "80%",
     marginBottom: 20,
   },
   container: {
     flex: 1,
     //backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
