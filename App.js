@@ -39,7 +39,7 @@ const CombinedDarkTheme = {
 };
 
 import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
+import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import loc from "./utils/localization";
 import { disableExpoCliLogging } from "expo/build/logs/Logs";

@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, Button, Title, Paragraph } from 'react-native-paper';
-import mainContext from '../context/mainContext';
-import Firebase from '../Firebase';
-import loc from '../utils/localization';
+import React, { useContext } from "react";
+import { View, StyleSheet } from "react-native";
+import { Text, Button, Title, Paragraph } from "react-native-paper";
+import mainContext from "../../context/mainContext";
+import Firebase from "../../Firebase";
+import loc from "../../utils/localization";
+import styles from "./HomeScreen.styles";
+
 const HomeScreen = () => {
   const { currentUser } = Firebase.auth();
   //console.log(currentUser);
@@ -24,32 +26,16 @@ const HomeScreen = () => {
       </View>
       <View style={styles.box}>
         <Button onPress={() => signOutUser()} mode="contained" icon="logout">
-          {loc.t('signout')}
+          {loc.t("signout")}
         </Button>
       </View>
       <View style={styles.box}>
         <Button onPress={() => inHome()} icon="camera" mode="contained">
-          {loc.t('theme')}
+          {loc.t("theme")}
         </Button>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    width: '80%',
-    marginBottom: 20,
-  },
-  container: {
-    flex: 1,
-    //backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    marginBottom: 20,
-  },
-});
 
 export default HomeScreen;
